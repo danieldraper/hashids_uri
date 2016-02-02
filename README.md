@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/danieldraper/hashids_uri.svg)](https://travis-ci.org/danieldraper/hashids_uri)
+[![Dependency Status](https://gemnasium.com/danieldraper/hashids_uri.svg)](https://gemnasium.com/danieldraper/hashids_uri)
+[![Code Climate](https://codeclimate.com/github/danieldraper/hashids_uri/badges/gpa.svg)](https://codeclimate.com/github/danieldraper/hashids_uri)
+
 # HashidsUri
 
 HashidsUri allows you to easily use (Hashids)[http://hashids.org/] in your Ruby on Rails URLs via the (Hashids Gem)[https://github.com/peterhellberg/hashids.rb]. You no longer need to expose sequential IDs to your users and you can do all this without changing your primary key to a UUID or some custom database level function.
