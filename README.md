@@ -4,7 +4,7 @@
 
 # HashidsUri
 
-HashidsUri allows you to easily use (Hashids)[http://hashids.org/] in your Ruby on Rails URLs via the (Hashids Gem)[https://github.com/peterhellberg/hashids.rb]. You no longer need to expose sequential IDs to your users and you can do all this without changing your primary key to a UUID or some custom database level function.
+HashidsUri allows you to easily use [Hashids](http://hashids.org/) in your Ruby on Rails URLs via the [Hashids Gem](https://github.com/peterhellberg/hashids.rb). You no longer need to expose sequential IDs to your users and you can do all this without changing your primary key to a UUID or some custom database level function.
 
 An example URL using HashidsUri
 ```http
