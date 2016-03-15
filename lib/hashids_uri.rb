@@ -3,29 +3,26 @@ require 'active_record'
 
 module ActiveRecord
   module HashidsUri
-    extend ::ActiveSupport::Concern
-
-    class << self
-      attr_accessor :salt, :min_length
+    def self.included(base)
+      base.extend         ClassMethods
+      base.send :include, InstanceMethods
     end
 
     module ClassMethods
       def has_hashids_uri(options = {})
-        ActiveRecord::HashidsUri.salt       = options.fetch(:salt, '')
-        ActiveRecord::HashidsUri.min_length = options.fetch(:min_length, 6)
+        class_attribute :salt, :min_length
 
-        include InstanceMethods
+        self.salt = options.fetch(:salt, '')
+        self.min_length = options.fetch(:min_length, 6)
       end
-    end
 
-    module ClassMethods
       def find_by_hash(hash)
-        find(
-          ::Hashids.new(
-            ActiveRecord::HashidsUri.salt,
-            ActiveRecord::HashidsUri.min_length,
-          ).decode(hash).first
-        )
+        decoded_id = ::Hashids.new(
+          self.salt,
+          self.min_length
+        ).decode(hash).first
+
+        find(decoded_id)
       end
 
       def find(*args)
@@ -37,11 +34,23 @@ module ActiveRecord
     end
 
     module InstanceMethods
-      def to_param
+      def salt
+        self.class.salt
+      end
+
+      def min_length
+        self.class.min_length
+      end
+
+      def hashid
         ::Hashids.new(
-          ActiveRecord::HashidsUri.salt,
-          ActiveRecord::HashidsUri.min_length
+          salt,
+          min_length
         ).encode(id)
+      end
+
+      def to_param
+        hashid
       end
     end
   end
