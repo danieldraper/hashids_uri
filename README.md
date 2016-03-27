@@ -37,6 +37,11 @@ def User < ActiveRecord::Base
 end
 ```
 
+You will also need to create a database column called `hashid`, this was added
+to improve performance:
+
+    $ bin/rails g add_hashid_to_users hashid:string:uniq
+
 By default the underlying Hashids gem does not provide a unique salt when creating a hash, this will lead to the same hash for each model with the same ID. If you require a unique hash you can provide a salt when initializing HashidsUri.
 
 ```ruby

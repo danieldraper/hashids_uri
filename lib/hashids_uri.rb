@@ -14,6 +14,9 @@ module ActiveRecord
 
         self.salt = options.fetch(:salt, '')
         self.min_length = options.fetch(:min_length, 6)
+
+        define_method(:hashid) { read_attribute(:hashid) || generate_hashid }
+        after_create { update_attribute(:hashid, generate_hashid) unless hashid? }
       end
 
       def find_by_hash(hash)
@@ -42,7 +45,7 @@ module ActiveRecord
         self.class.min_length
       end
 
-      def hashid
+      def generate_hashid
         ::Hashids.new(
           salt,
           min_length
